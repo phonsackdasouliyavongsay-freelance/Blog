@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive CV of Phonsackda SOULIYAVONGSAY</title>
+    <!-- Fixed CDN URLs (removed trailing spaces) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #44403c; /* stone-700 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .skills-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #a16207; /* yellow-600 */
+        }
+        .timeline-item-header {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .timeline-item-header:hover {
+            background-color: #e7e5e4; /* stone-200 */
+        }
+        .timeline-content {
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-stone-800">Professional Profile</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#summary" class="nav-link text-stone-600 px-3 py-2 rounded-md text-sm font-medium">Summary</a>
+                        <a href="#experience" class="nav-link text-stone-600 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
+                        <a href="#skills" class="nav-link text-stone-600 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#education" class="nav-link text-stone-600 px-3 py-2 rounded-md text-sm font-medium">Education</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <section id="summary" class="text-center py-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">Phonsackda SOULIYAVONGSAY</h1>
+            <p class="mt-2 text-lg text-stone-600">Web Developer | Project Manager | AI Enthusiast</p>
+            <div class="mt-6 text-left max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-2xl font-bold text-stone-800 mb-4">Professional Summary</h2>
+                <p class="text-stone-700 leading-relaxed">
+                    Versatile Freelance Web Developer with over 10 years of experience in strategic project management, specializing in content conversion services and technical support. Proficient in data analysis to derive actionable insights and skilled in leveraging AI and automation tools (Gemini, n8n, Claude, Qwen, ChatGPT, Deepseek) to streamline development workflows, automate repetitive tasks, and significantly enhance efficiency and problem-solving.
+                </p>
+            </div>
+        </section>
+
+        <section id="experience" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Professional Experience</h2>
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-center text-stone-700 mb-4">Career Progression Timeline</h3>
+                <p class="text-center text-stone-600 max-w-2xl mx-auto mb-6">This chart provides a visual overview of my career path, showing the duration and overlap of my key roles at Digital Divide Data. It highlights a consistent trajectory of growth and increasing responsibility over more than a decade.</p>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                   <div class="chart-container">
+                       <canvas id="experienceChart"></canvas>
+                   </div>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-center text-stone-700 mt-16 mb-8">Detailed Roles & Responsibilities</h3>
+            <div id="timeline-container" class="relative border-l-2 border-stone-300 ml-6">
+            </div>
+        </section>
+        
+        <section id="skills" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Skills & Expertise</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                 <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold text-center text-stone-700 mb-4">Core Competency Overview</h3>
+                    <div class="skills-chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+                <div id="skills-list" class="space-y-6">
+                </div>
+            </div>
+        </section>
+        
+        <section id="education" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Education & Languages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold text-stone-800 mb-4">Education</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-semibold">Bachelor of Computer Science</p>
+                            <p class="text-stone-600">National University of Laos, Dongdok Village</p>
+                            <p class="text-sm text-stone-500">Completed August 2014</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">High School Diploma</p>
+                            <p class="text-stone-600">Vapi High School, Vapi Village</p>
+                            <p class="text-sm text-stone-500">Completed June 2009</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold text-stone-800 mb-4">Languages</h3>
+                    <ul class="space-y-2 text-stone-700">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-stone-500 rounded-full mr-3"></span>Lao: Fluent (Written & Spoken)
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-stone-500 rounded-full mr-3"></span>Thai: Fluent (Written & Spoken)
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-stone-500 rounded-full mr-3"></span>English: Fluent (Written & Spoken)
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-stone-800 text-white text-center py-6">
+        <p>Contact: +856 2022556524, +856 2059666809 | Email: phonsackda.souliyavongsay@gmail.com</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Experience Data
+            const experienceData = [
+                {
+                    role: 'Senior Project Manager',
+                    company: 'Digital Divide Data, Laos',
+                    period: 'September 2021 – June 2025',
+                    responsibilities: [
+                        "Establish clear and measurable project goals, objectives, deliverables, and success criteria in alignment with organizational and client expectations.",
+                        "Strategically allocate resources, including budget, personnel, and equipment, to maximize project efficiency and success.",
+                        "Build, inspire, and lead high-performing project teams by fostering collaboration, accountability, and continuous development.",
+                        "Collaborate with key stakeholders—clients, executives, and internal teams—to ensure alignment, secure buy-in, and maintain strong working relationships throughout the project lifecycle.",
+                        "Track project milestones and progress proactively, identifying potential delays or risks, and implementing timely mitigation strategies.",
+                        "Ensure that all project deliverables meet or exceed established quality standards and client specifications.",
+                        "Effectively manage changes to the project scope, timeline, and budget, maintaining control and minimizing disruption.",
+                        "Anticipate future project costs and revenues to support financial planning and decision-making.",
+                        "Provide consistent and detailed updates on project performance to stakeholders and senior leadership.",
+                        "Identify lessons learned and best practices from completed projects to enhance processes, tools, and team performance."
+                    ]
+                },
+                {
+                    role: 'Project Manager',
+                    company: 'Digital Divide Data, Laos',
+                    period: 'July 2016 – August 2021',
+                    responsibilities: [
+                        "Manage and oversee multiple projects simultaneously, ensuring that all processes run smoothly and efficiently.",
+                        "Communicate regularly with clients regarding project requirements, input forecasting, financial planning, and risk mitigation.",
+                        "Estimate project budgets, develop comprehensive plans, and allocate resources effectively.",
+                        "Collaborate with the production team to ensure all projects are delivered on time, within scope, and within budget.",
+                        "Maintain and update detailed project schedules and plans to track progress.",
+                        "Apply appropriate verification techniques to manage changes in project scope, schedules, and costs.",
+                        "Generate and submit project progress reports on a weekly and monthly basis.",
+                        "Prepare monthly incentives and invoices in accordance with project performance.",
+                        "Build and maintain strong relationships with clients and stakeholders.",
+                        "Create and maintain comprehensive project documentation."
+                    ]
+                },
+                {
+                    role: 'Technical Support Specialist',
+                    company: 'Digital Divide Data, Laos',
+                    period: 'March 2014 – June 2025',
+                    responsibilities: [
+                        "Contribute to the enhancement of newspaper digitization by researching and integrating additional technologies.",
+                        "Provide comprehensive project support by identifying technical issues, conducting research, and guiding the team through corrective actions.",
+                        "Assist in the development of training programs by identifying knowledge gaps and introducing new techniques.",
+                        "Drive performance optimization by identifying system inefficiencies and recommending appropriate changes and upgrades.",
+                        "Promote automation across processes and tasks wherever feasible to improve productivity and reduce manual effort."
+                    ]
+                }
+            ];
+
+            // Render Timeline
+            const timelineContainer = document.getElementById('timeline-container');
+            experienceData.forEach((job, index) => {
+                const item = document.createElement('div');
+                item.classList.add('mb-8');
+                item.innerHTML = `
+                    <div class="flex items-center ml-[-25px] mb-1">
+                        <div class="bg-stone-500 w-6 h-6 rounded-full shadow-lg z-10"></div>
+                        <div class="flex-1 ml-4">
+                            <div class="timeline-item-header p-4 bg-white rounded-lg shadow-sm">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="text-lg font-bold text-stone-800">${job.role}</h4>
+                                        <p class="text-stone-600">${job.company}</p>
+                                        <p class="text-sm text-stone-500">${job.period}</p>
+                                    </div>
+                                    <div class="text-stone-500 transform transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-10 pl-4 py-2 border-l-2 border-stone-200 timeline-content max-h-0 opacity-0">
+                        <ul class="list-disc list-inside space-y-2 text-stone-700 bg-white/50 p-4 rounded-md">
+                            ${job.responsibilities.map(r => `<li>${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                timelineContainer.appendChild(item);
+            });
+
+            // Timeline Toggle
+            document.querySelectorAll('.timeline-item-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.closest('.mb-8').querySelector('.timeline-content');
+                    const icon = header.querySelector('svg').parentElement;
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                        content.style.opacity = '0';
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.style.opacity = '1';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // Skills Data
+            const skillsData = {
+                'Project Management': ['Resource Allocation', 'Stakeholder Engagement', 'Risk Management', 'Financial Forecasting', 'Team Leadership', 'Quality Assurance', 'Change Management'],
+                'Web Development': ['HTML5, CSS3, JS (ES6+)', 'Node.js, Java, PHP'],
+                'Database & Data Analysis': ['MySQL, SQL', 'Excel'],
+                'AI & Automation': ['Gemini', 'n8n', 'Claude', 'Qwen', 'ChatGPT', 'Deepseek'],
+                'DevOps & Platforms': ['Docker', 'AWS'],
+                'Creative/Freelance': ['Freelance Photographer', 'Camera & Lens Knowledge']
+            };
+
+            // Render Skills List
+            const skillsListContainer = document.getElementById('skills-list');
+            for (const [category, skills] of Object.entries(skillsData)) {
+                 const skillBlock = document.createElement('div');
+                 skillBlock.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-sm');
+                 skillBlock.innerHTML = `
+                    <h4 class="font-bold text-stone-800 mb-2">${category}</h4>
+                    <div class="flex flex-wrap gap-2">
+                        ${skills.map(skill => `<span class="bg-stone-200 text-stone-700 text-xs font-medium px-2.5 py-0.5 rounded-full">${skill}</span>`).join('')}
+                    </div>
+                 `;
+                 skillsListContainer.appendChild(skillBlock);
+            }
+
+            // Skills Radar Chart
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctxSkills, {
+                type: 'radar',
+                data: {
+                    labels: Object.keys(skillsData),
+                    datasets: [{
+                        label: 'Core Competencies',
+                        data: [90, 95, 85, 88, 75, 80],
+                        backgroundColor: 'rgba(120, 113, 108, 0.2)',
+                        borderColor: 'rgb(120, 113, 108)',
+                        pointBackgroundColor: 'rgb(120, 113, 108)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(120, 113, 108)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: { font: { size: 12 } },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                stepSize: 20
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Experience Timeline Chart
+            const ctxExperience = document.getElementById('experienceChart').getContext('2d');
+            new Chart(ctxExperience, {
+                type: 'bar',
+                data: {
+                    labels: ['Technical Support', 'Project Manager', 'Senior Project Manager'],
+                    datasets: [{
+                        label: 'Role Duration',
+                        data: [
+                            {x: ['2014-03-01', '2025-06-30'], y: 'Technical Support'},
+                            {x: ['2016-07-01', '2021-08-31'], y: 'Project Manager'},
+                            {x: ['2021-09-01', '2025-06-30'], y: 'Senior Project Manager'}
+                        ],
+                        backgroundColor: [
+                            'rgba(168, 162, 158, 0.7)',
+                            'rgba(120, 113, 108, 0.7)',
+                            'rgba(87, 83, 78, 0.7)'
+                        ],
+                        borderColor: [
+                           'rgb(168, 162, 158)',
+                           'rgb(120, 113, 108)',
+                           'rgb(87, 83, 78)'
+                        ],
+                        borderWidth: 1,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'year',
+                                tooltipFormat: 'MMM yyyy'
+                            },
+                            min: '2014-01-01',
+                            max: '2026-01-01'
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const start = new Date(context.raw.x[0]).toLocaleDateString();
+                                    const end = new Date(context.raw.x[1]).toLocaleDateString();
+                                    return `${context.dataset.label}: ${start} - ${end}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Smooth Scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
