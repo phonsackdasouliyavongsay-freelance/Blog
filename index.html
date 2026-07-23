@@ -347,7 +347,13 @@
             new Chart(ctxSkills, {
                 type: 'radar',
                 data: {
-                    labels: Object.keys(skillsData),
+                    labels: [
+                            ["Project", "Management"],
+                            ["Technical", "Skills"],
+                            ["Programming", "& Development"],
+                            ["Database", "& Data Analysis"],
+                            ["AI", "& Automation"]
+                        ],
                     datasets: [{
                         label: 'Core Competencies',
                         data: [90, 95, 85, 88, 75],
