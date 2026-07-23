@@ -365,21 +365,54 @@
                         pointHoverBorderColor: 'rgb(120, 113, 108)'
                     }]
                 },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
-                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                            pointLabels: { font: { size: 12 } },
-                            ticks: {
-                                backdropColor: 'transparent',
-                                stepSize: 20
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    },
+options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    layout: {
+        padding: {
+            top: 40,
+            bottom: 40,
+            left: 60,
+            right: 60
+        }
+    },
+
+    scales: {
+        r: {
+            beginAtZero: true,
+
+            min: 0,
+            max: 100,
+
+            ticks: {
+                stepSize: 20,
+                backdropColor: 'transparent'
+            },
+
+            angleLines: {
+                color: 'rgba(0,0,0,0.1)'
+            },
+
+            grid: {
+                color: 'rgba(0,0,0,0.1)'
+            },
+
+            pointLabels: {
+                font: {
+                    size: 11
+                },
+                padding: 25
+            }
+        }
+    },
+
+    plugins: {
+        legend: {
+            display: false
+        }
+    }
+}
                     plugins: { 
                         legend: { display: false },
                         tooltip: {
