@@ -57,17 +57,18 @@
         }
 
         .profile-photo {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
             object-fit: cover;
             border-radius: 9999px;
             border: 6px solid white;
             box-shadow: 0 12px 30px rgba(0,0,0,.18);
-            transition: all .3s ease;
+            transition: transform .3s ease;
+            transform: scale(1.25);
         }
 
         .profile-photo:hover{
-            transform: scale(1.05);
+            transform: scale(1.35);
         }
 
         .profile-ring{
@@ -75,6 +76,7 @@
             padding:6px;
             border-radius:9999px;
             background:linear-gradient(135deg,#0f766e,#2563eb);
+            overflow: hidden;
         }
 
         .hero-card{
